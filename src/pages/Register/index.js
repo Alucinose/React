@@ -13,15 +13,17 @@ function Register(){
            <TextInput placeholder= 'Seu nome' placeholderTextColor='#fff' style={styles.input}/>
            <TextInput placeholder= 'Seu e-mail' placeholderTextColor='#fff' style={styles.input}/>
            <TextInput secureTextEntry={true} placeholder= 'Digite sua senha' placeholderTextColor='#fff' style={styles.input}/>
-           <RNPickerSelect style ={styles.pickerSelect} 
+           <View style = {styles.buttonBox}>
+           <RNPickerSelect  
             onValueChange={(value) => console.log(value)}
             items={[
                 { label: 'Developer', value: 'developer'  },
                 { label: 'Student', value: 'student' },
                 { label: 'Teacher', value: 'teacher' },
                 { label: 'Other', value: 'other' },
-            ]}
+             ]}
         />
+        </View>
            <TouchableOpacity style={styles.button}>
               <Text> Register </Text>
            </TouchableOpacity>
@@ -55,8 +57,10 @@ const styles = StyleSheet.create({
     button:{
         backgroundColor: '#fff',
         marginTop: 10,
-        padding: 5,
-        alignItems: 'center'
+        padding: 10,
+        alignItems: 'center',
+        height: 45,
+        borderRadius: 5
     },
     image:{
         width: 285,
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
     },
     scrollView:{
         marginHorizontal: 10,
-    },
+    }/*,
     pickerSelect:{
         fontSize: 16,
         paddingHorizontal: 10,
@@ -79,10 +83,21 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         color: 'black',
         paddingRight: 30,
-        /*color: '#fff',
+        color: '#fff',
         marginTop: 10,
         padding: 5,
-        alignItems: 'center'*/
+        alignItems: 'center'
+    }*/,
+    buttonBox:{
+   
+        marginTop: 10,
+        borderColor: '#2F3236',
+        borderWidth: 2,
+        backgroundColor: '#fff',
+        height: 45,
+        width: '100%',
+        borderRadius: 5
+
     }
 })
 
