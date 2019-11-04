@@ -3,12 +3,13 @@ import {View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Im
 import RNPickerSelect from 'react-native-picker-select'
 import background from '../../assets/bg.jpg' //Imagem fundo
 import logo from '../../assets/logo.png'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-function Register(){
+function Register( props){
     return(
         <ScrollView>
         <ImageBackground source={background} style ={styles.background}>
-        <Image source = {logo} style ={styles.image} />
+        <Image source = {logo} style = {styles.image} />
         <View style = {styles.viewLogin}>
            <TextInput placeholder= 'Seu nome' placeholderTextColor='#fff' style={styles.input}/>
            <TextInput placeholder= 'Seu e-mail' placeholderTextColor='#fff' style={styles.input}/>
@@ -25,8 +26,15 @@ function Register(){
         />
         </View>
            <TouchableOpacity style={styles.button}>
+           <Icon name = "check" color="#666" style={styles.iconStyle}/>    
               <Text> Register </Text>
            </TouchableOpacity>
+
+           <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate('Login')}>
+           <Icon name = "arrow-back" color="#666" style={styles.iconStyle}/>
+              <Text> Voltar </Text>
+           </TouchableOpacity>
+           
            
         </View>
        
@@ -97,6 +105,13 @@ const styles = StyleSheet.create({
         height: 45,
         width: '100%',
         borderRadius: 5
+
+    },iconStyle:{
+        position: "absolute",
+        left: 0,
+        fontSize: 30,
+        alignItems: 'center',
+        marginTop: 6
 
     }
 })
