@@ -5,7 +5,7 @@ import background from '../../assets/bg.jpg' //Imagem fundo
 import logo from '../../assets/logo.png'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-function Register( props){
+function Register( props ){
     return(
         <ScrollView>
         <ImageBackground source={background} style ={styles.background}>
