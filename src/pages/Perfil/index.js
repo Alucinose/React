@@ -5,46 +5,78 @@ import RNPickerSelect from 'react-native-picker-select'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import perfil from '../../assets/perfil.png'
 
-function Perfil( props ) {
-    return (
-        <ScrollView>
-            <ImageBackground source={background} style={styles.background}>
-               <View>
-                 <TouchableOpacity style={styles.button}>
-                   <Icon name = "dehaze" color="#666" style={styles.iconStyle}/> 
-                 </TouchableOpacity>
-               </View>
 
-              <View>
-                <Image source={perfil} style={styles.image} />
-              </View>
+class Perfil extends React.Component {
 
-              <View>
-                <Text style={styles.text}> Perfil profissional</Text>
-              </View>
+ //Nosso state (estado)
+    state = {
+        avatar: perfil,
+        name: 'juju',
+        age: '25',
+        height: '1.87',
+    }
 
-              <View style={styles.textAreaContainer}>
-                  <View style={styles.iconPhone}>
-                    <Icon name="create" color="#666" size={25} />
-                  </View>
-                
-                <TextInput placeholder= 'Digite um texto curto sobre você! ' textAlign= {"center"} placeholderTextColor='#666' 
-            style={styles.textArea} numberOfLines={10} multiline ={true}/>
-                
-               </View>
+    //Alterando imagem do perfil
+    hlandleChooseAvatar() {
+        this.setState({
+            name: 'kleber',
+            age: 32
+        })
+    }
+   
+    render (){
+        //Pegando avatar do State(estado)
+        const { avatar, name, age } = this.state
 
-               <View><Text style={styles.textContato}> Contato</Text></View>
+        return (
+            <ScrollView>
+                <ImageBackground source={background} style={styles.background}>
+                <View>
+                    <TouchableOpacity style={styles.button}>
+                    <Icon name = "dehaze" color="#666" style={styles.iconStyle}/> 
+                    </TouchableOpacity>
+                </View>
 
-               <View> 
-                <TextInput placeholder= '(xx) xxxxx-xxxx' placeholderTextColor='#666' />
-               </View>
+                <View>
+                    <Text>{name + age}</Text>
+                    <TouchableOpacity onPress={() => this.hlandleChooseAvatar()} >
+                    <Image source={avatar} style={styles.image} />
+                    </TouchableOpacity>
+                </View>
 
-    
-            </ImageBackground>
-        </ScrollView>
+                <View>
+                    <Text style={styles.text}> Perfil profissional</Text>
+                </View>
+
+                <View style={styles.textAreaContainer}>
+                    <View style={styles.iconText}>
+                        <Icon name="create" color="#666" size={25} />
+                    </View>
+                    
+                    <TextInput placeholder= 'Digite um texto curto sobre você! ' textAlign= {"center"} placeholderTextColor='#666' 
+                style={styles.textArea} numberOfLines={10} multiline ={true}/>
+                    
+                </View>
+
+                <View><Text style={styles.textContato}> Contato</Text></View>
+
+                <View> 
+                <Icon name="phone" color="#666" style={styles.iconPhone} />
+                    <TextInput placeholder= '(**) *****-****' />
+                </View>
+
+                <View>
+            <TouchableOpacity style={styles.buttonRegister}>   
+                <Text style= {{color: '#fff'}}> Register </Text>
+            </TouchableOpacity>
+                </View>
+        
+                </ImageBackground>
+            </ScrollView>
 
 
-    )
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -104,7 +136,7 @@ const styles = StyleSheet.create({
         width: '80%',
         alignItems: 'center'
     },
-    iconPhone:{
+    iconText:{
         left: "45%" ,
         fontSize: 30,
     },
@@ -112,6 +144,21 @@ const styles = StyleSheet.create({
         marginTop:10,
         fontSize: 25,
         fontWeight: 'bold',
+    },
+    iconPhone:{
+        textAlign: 'center',
+        fontSize: 25,
+        position: 'absolute',
+        right: "25%",
+        marginTop: 10
+
+    },
+    buttonRegister:{
+        backgroundColor: "#666",
+        padding: 5,
+        width: 200,
+        alignItems: 'center',
+        marginTop: "3%"
     }
 })
 
