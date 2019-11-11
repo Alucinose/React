@@ -1,32 +1,43 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native'
 import background from '../../assets/bg.jpg' //Imagem fundo
-import RNPickerSelect from 'react-native-picker-select'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import perfil from '../../assets/perfil.png'
+import ImagePicker from 'react-native-image-picker'
 
 
 class Perfil extends React.Component {
 
  //Nosso state (estado)
     state = {
-        avatar: perfil,
-        name: 'juju',
-        age: '25',
-        height: '1.87',
+        //photo: ele irá armazenar o caminho do nosso avatar no smartphone
+        photo: ''
     }
 
     //Alterando imagem do perfil
     hlandleChooseAvatar() {
-        this.setState({
-            name: 'kleber',
-            age: 32
-        })
+        ImagePicker.showImagePicker(response => {
+            console.log('Response = ', response);
+          
+            if (response.didCancel) {
+              console.log('User cancelled image picker');
+            } else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+            } else {
+              const source = { uri: response.uri };
+          
+              this.setState({
+                photo: source
+              });
+            }
+          });
     }
    
     render (){
         //Pegando avatar do State(estado)
-        const { avatar, name, age } = this.state
+        const { photo } = this.state
 
         return (
             <ScrollView>
@@ -37,10 +48,15 @@ class Perfil extends React.Component {
                     </TouchableOpacity>
                 </View>
 
-                <View>
-                    <Text>{name + age}</Text>
+                <View>                
                     <TouchableOpacity onPress={() => this.hlandleChooseAvatar()} >
-                    <Image source={avatar} style={styles.image} />
+                        {
+                            photo ?
+                            <Image source={photo} style={styles.image}/>
+                            :
+                            <Image source={perfil} style={styles.image} />
+                        }
+                    
                     </TouchableOpacity>
                 </View>
 
