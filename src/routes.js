@@ -7,6 +7,7 @@ import Register from './pages/Register'
 import Perfil from './pages/Perfil'
 import Friends from './pages/Friends'
 import AddFriends from './pages/AddFriends'
+import Conversations from './pages/Conversations'
 
 const routes = createAppContainer(
     createSwitchNavigator({
@@ -14,9 +15,10 @@ const routes = createAppContainer(
         Register,
         Perfil,
         Friends,
-        AddFriends
+        AddFriends,
+        Conversations
     },{
-        initialRouteName: 'AddFriends' //Altera a tela para você editar sem precisar mudar as rotas
+        initialRouteName: 'Conversations' //Altera a tela para você editar sem precisar mudar as rotas
     
     })
 )
