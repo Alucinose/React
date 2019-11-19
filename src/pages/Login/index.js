@@ -6,7 +6,19 @@ import logo from '../../assets/logo.png'
 
 
 
-function Login( props ) {
+class Login extends React.Component{
+
+    //Estado 
+    state = {
+        email: '',
+        password: ''
+    }
+
+    handleSubmit = () =>{
+        console.log ( this.state )
+    }
+
+    render(){
     return (
         <ScrollView>
             <ImageBackground source={background} style={styles.background}>
@@ -15,16 +27,16 @@ function Login( props ) {
                 <View style = {styles.viewLogin}>
                     <View style={styles.sectionStyle}>
                         <Icon name="email" color="#fff" style={styles.iconStyle} />
-                        <TextInput placeholder='Digite seu e-mail' placeholderTextColor='#fff' style={styles.input} />
+                        <TextInput placeholder='Digite seu e-mail' placeholderTextColor='#fff' style={styles.input} onChangeText= {( text) => this.setState({ email: text })} />
                     </View>
                     <View style={styles.viewPassword}>
                         <Icon name="lock" color="#fff" style={styles.iconStyle} />
-                        <TextInput secureTextEntry={true} placeholder='Digite sua senha' placeholderTextColor='#fff' style={styles.input} />
+                        <TextInput secureTextEntry={true} placeholder='Digite sua senha' placeholderTextColor='#fff' style={styles.input} onChangeText= {( text) => this.setState({ password: text})} />
                     </View>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.handleSubmit}>
                         <Text>Login</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate('Register')}>
+                    <TouchableOpacity style={styles.button} onPress = {() => this.props.navigation.navigate('Register')}>
                         <Text> Register </Text>
                     </TouchableOpacity>
 
@@ -38,6 +50,7 @@ function Login( props ) {
             </ImageBackground>
         </ScrollView>
     )
+}
 }
 
 //Nossos estilos de páginas

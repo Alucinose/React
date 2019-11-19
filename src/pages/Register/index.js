@@ -5,7 +5,17 @@ import background from '../../assets/bg.jpg' //Imagem fundo
 import logo from '../../assets/logo.png'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-function Register( props ){
+class Register extends React.Component{
+
+        //Estado 
+        state = {
+            name: '',
+            email: '',
+            password: '',
+        
+            }
+
+    render(){
     return(
         <ScrollView>
         <ImageBackground source={background} style ={styles.background}>
@@ -43,7 +53,7 @@ function Register( props ){
     </ScrollView>
     )
 }
-
+}
 //Nossos estilos de página
 const styles = StyleSheet.create({
     background:{
