@@ -1,9 +1,11 @@
 import React from 'react'
-import {View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView} from 'react-native'
+import {View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, Alert} from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import background from '../../assets/bg.jpg' //Imagem fundo
 import logo from '../../assets/logo.png'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import Axios from 'axios'
+
 
 class Register extends React.Component{
 
@@ -12,8 +14,13 @@ class Register extends React.Component{
             name: '',
             email: '',
             password: '',
-        
-            }
+            category: '',
+        }
+
+        handleSubmit = async () => {
+            console.log( this.state )
+           const testeAxios = await Axios.post('http://10.51.47.64:3000/users', this.state)
+        }
 
     render(){
     return(
@@ -21,21 +28,24 @@ class Register extends React.Component{
         <ImageBackground source={background} style ={styles.background}>
         <Image source = {logo} style = {styles.image} />
         <View style = {styles.viewLogin}>
-           <TextInput placeholder= 'Seu nome' placeholderTextColor='#fff' style={styles.input}/>
-           <TextInput placeholder= 'Seu e-mail' placeholderTextColor='#fff' style={styles.input}/>
-           <TextInput secureTextEntry={true} placeholder= 'Digite sua senha' placeholderTextColor='#fff' style={styles.input}/>
+           <TextInput placeholder= 'Seu nome' placeholderTextColor='#fff' style={styles.input} 
+              onChangeText={(text) => this.setState ({name: text})}/>
+           <TextInput placeholder= 'Seu e-mail' placeholderTextColor='#fff' style={styles.input}
+              onChangeText={(text) => this.setState ({email: text})}/>
+           <TextInput secureTextEntry={true} placeholder= 'Digite sua senha' placeholderTextColor='#fff' style={styles.input}
+              onChangeText={(text) => this.setState ({password: text})}/>
            <View style = {styles.buttonBox}>
            <RNPickerSelect  
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => this.setState({ category: value }) }
             items={[
-                { label: 'Developer', value: 'developer'  },
+                { label: 'Developer', value: 'developer'},
                 { label: 'Student', value: 'student' },
                 { label: 'Teacher', value: 'teacher' },
                 { label: 'Other', value: 'other' },
              ]}
         />
         </View>
-           <TouchableOpacity style={styles.button}>
+           <TouchableOpacity style={styles.button} onPress={() => this.handleSubmit()}>
            <Icon name = "check" color="#666" style={styles.iconStyle}/>    
               <Text> Register </Text>
            </TouchableOpacity>
