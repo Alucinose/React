@@ -5,35 +5,62 @@ import background from '../../assets/bg.jpg' //Imagem fundo
 import logo from '../../assets/logo.png'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Axios from 'axios'
+import Error from '../../components/Error'
 
 
 class Register extends React.Component{
 
         //Estado 
         state = {
-            name: '',
-            email: '',
-            password: '',
-            category: '',
+            user:{
+                 name: '',
+                 email: '',
+                 password: '',
+                 category: '',
+            },
+            error: false,
+            errorText: ''
         }
 
         handleSubmit = async () => {
-            console.log( this.state )
-           const testeAxios = await Axios.post('http://10.51.47.64:3000/users', this.state)
+            const { data } = await Axios.post('http://10.51.47.64:3000/users', this.state)
+
+            //Verifica se foi retornado um erro do nosso backend
+            if (data.error){
+                this.setState({ error: true, errorText: data.error})
+            }
+
         }
 
     render(){
+        const{error, errorText} = this.state
+
     return(
         <ScrollView>
         <ImageBackground source={background} style ={styles.background}>
         <Image source = {logo} style = {styles.image} />
+
+        {/* NOSSO COMPONENT DE ERRO*/}
+        {
+            error &&
+            <Error icon="account-circle" text={errorText}/>
+
+        }
+       
         <View style = {styles.viewLogin}>
-           <TextInput placeholder= 'Seu nome' placeholderTextColor='#fff' style={styles.input} 
-              onChangeText={(text) => this.setState ({name: text})}/>
-           <TextInput placeholder= 'Seu e-mail' placeholderTextColor='#fff' style={styles.input}
-              onChangeText={(text) => this.setState ({email: text})}/>
-           <TextInput secureTextEntry={true} placeholder= 'Digite sua senha' placeholderTextColor='#fff' style={styles.input}
-              onChangeText={(text) => this.setState ({password: text})}/>
+           <TextInput placeholder= 'Seu nome' 
+              placeholderTextColor='#fff' style={styles.input} 
+              onChangeText={(text) => this.setState ({ ...this.state.user, name: text })}/>
+
+           <TextInput placeholder= 'Seu e-mail' 
+              placeholderTextColor='#fff' style={styles.input}
+              onChangeText={(text) => this.setState ({ ...this.state.user, email: text })}/>
+
+           <TextInput secureTextEntry={true} 
+              placeholder= 'Digite sua senha' 
+              placeholderTextColor='#fff' style={styles.input}
+              onChangeText={(text) => this.setState ({ ...this.state.user, password: text })}/>
+
            <View style = {styles.buttonBox}>
            <RNPickerSelect  
             onValueChange={(value) => this.setState({ category: value }) }
@@ -76,7 +103,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#2F3236',
         width: '80%',
         padding: 15,
-        marginTop: 40
+        marginTop: 5
     },
     input:{
         borderBottomColor: '#fff',

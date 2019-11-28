@@ -3,6 +3,7 @@ import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, I
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import background from '../../assets/bg.jpg' //Imagem fundo
 import logo from '../../assets/logo.png'
+import Error from '../../components/Error'
 
 
 
@@ -23,6 +24,8 @@ class Login extends React.Component{
         <ScrollView>
             <ImageBackground source={background} style={styles.background}>
                 <Image source={logo} style={styles.image} />
+                {/* ----------COMPONENTE ERRO---------- */}
+                {<Error icon="block" text="Erro! Login ou senha inválido"/>}
 
                 <View style = {styles.viewLogin}>
                     <View style={styles.sectionStyle}>
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#2F3236',
         width: '80%',
         padding: 15,
-        marginTop: 40
+        marginTop: 10
     },
     input: {
         width: '100%',
@@ -86,7 +89,6 @@ const styles = StyleSheet.create({
     image: {
         width: 285,
         height: 225,
-
     },
     forgotPassword: {
         marginTop: 10,
