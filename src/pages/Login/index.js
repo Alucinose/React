@@ -4,27 +4,42 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import background from '../../assets/bg.jpg' //Imagem fundo
 import logo from '../../assets/logo.png'
 import Error from '../../components/Error'
-
-
+import Axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends React.Component{
 
     //Estado 
     state = {
+     
         email: '',
         password: ''
     }
+    //Responsável pelo nosso login
+    handleSubmit = async () =>{
+        //Enviando dados do nosso usuário para rota de autenticação
+        const response = await Axios.post('http://10.51.47.64:3000/auth',{
+        email: this.state.email,
+        password:  this.state.password
+    })
+        console.log(response)
+    }
 
-    handleSubmit = () =>{
-        console.log ( this.state )
+    //Armazenar dados do nosso usuário no local storage
+    setStorage = async ( data ) => {
+       await AsyncStorage.setItem('@user', data)
+       const value = AsyncStorage.getItem('@user')
+       console.log( value )
     }
 
     render(){
+
+        console.log(this.state)
     return (
         <ScrollView>
             <ImageBackground source={background} style={styles.background}>
                 <Image source={logo} style={styles.image} />
-                {/* ----------COMPONENTE ERRO---------- */}
+                {/* ---------- COMPONENTE ERRO ---------- */}
                 {<Error icon="block" text="Erro! Login ou senha inválido"/>}
 
                 <View style = {styles.viewLogin}>
@@ -36,7 +51,7 @@ class Login extends React.Component{
                         <Icon name="lock" color="#fff" style={styles.iconStyle} />
                         <TextInput secureTextEntry={true} placeholder='Digite sua senha' placeholderTextColor='#fff' style={styles.input} onChangeText= {( text) => this.setState({ password: text})} />
                     </View>
-                    <TouchableOpacity style={styles.button} onPress={() => this.handleSubmit}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.handleSubmit()}>
                         <Text>Login</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress = {() => this.props.navigation.navigate('Register')}>
