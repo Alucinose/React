@@ -7,40 +7,64 @@ import Error from '../../components/Error'
 import Axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage';
 
+
 class Login extends React.Component{
 
     //Estado 
     state = {
      
         email: '',
-        password: ''
+        password: '',
+        error: false,
+        errorText: '',
+
     }
     //Responsável pelo nosso login
     handleSubmit = async () =>{
         //Enviando dados do nosso usuário para rota de autenticação
-        const response = await Axios.post('http://10.51.47.64:3000/auth',{
+        const { data } = await Axios.post('http://10.51.47.64:3000/auth',{
         email: this.state.email,
         password:  this.state.password
     })
-        console.log(response)
+
+        //Passando os dados do usuário parar armazenar no local storage
+        if(data.token){
+            this.setStorage ( data )
+            this.props.navigation.navigate('Perfil') 
+        }
+          
+
+        //Verifica se foi retornado um erro do nosso backend
+        if (data.error){
+            this.setState({ error: true, errorText: data.error})
+        }
+
     }
+    
 
     //Armazenar dados do nosso usuário no local storage
     setStorage = async ( data ) => {
+        //Armazena nossos dados dentro da key @user
        await AsyncStorage.setItem('@user', data)
-       const value = AsyncStorage.getItem('@user')
-       console.log( value )
+      
     }
 
     render(){
 
+        const{error, errorText} = this.state
         console.log(this.state)
+
     return (
         <ScrollView>
             <ImageBackground source={background} style={styles.background}>
                 <Image source={logo} style={styles.image} />
-                {/* ---------- COMPONENTE ERRO ---------- */}
-                {<Error icon="block" text="Erro! Login ou senha inválido"/>}
+
+               {/* NOSSO COMPONENT DE ERRO*/}
+        {
+            error &&
+            <Error icon="account-circle" text={errorText}/>
+
+        }
 
                 <View style = {styles.viewLogin}>
                     <View style={styles.sectionStyle}>

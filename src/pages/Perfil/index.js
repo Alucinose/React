@@ -83,7 +83,7 @@ class Perfil extends React.Component {
 
                 <View>
             <TouchableOpacity style={styles.buttonRegister}>   
-                <Text style= {{color: '#fff'}}> Register </Text>
+                <Text style= {{color: '#fff'}}> Confirm </Text>
             </TouchableOpacity>
                 </View>
         
