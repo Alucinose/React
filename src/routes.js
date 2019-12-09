@@ -18,7 +18,7 @@ const routes = createAppContainer(
         AddFriends,
         Conversations
     },{
-        initialRouteName: 'Login' //Altera a tela para você editar sem precisar mudar as rotas
+        initialRouteName: 'Perfil' //Altera a tela para você editar sem precisar mudar as rotas
     
     })
 )

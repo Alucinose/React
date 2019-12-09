@@ -4,6 +4,8 @@ import background from '../../assets/bg.jpg' //Imagem fundo
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import perfil from '../../assets/perfil.png'
 import ImagePicker from 'react-native-image-picker'
+import axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage'
 
 
 class Perfil extends React.Component {
@@ -11,7 +13,15 @@ class Perfil extends React.Component {
  //Nosso state (estado)
     state = {
         //photo: ele irá armazenar o caminho do nosso avatar no smartphone
-        photo: ''
+        photo: '',
+        description: '',
+        telephone: ''
+    }
+
+    //Nosso component DidMount
+    componentDidMount() {
+        const user = AsyncStorage.getItem('user')
+
     }
 
     //Alterando imagem do perfil
@@ -33,6 +43,11 @@ class Perfil extends React.Component {
               });
             }
           });
+    }
+    //Envia os dados do usuário
+    handleSubimt() {
+        axios.put(`http://10.51.47.64:3000/users/${idUsuario}`, this.state)
+
     }
    
     render (){
@@ -69,20 +84,28 @@ class Perfil extends React.Component {
                         <Icon name="create" color="#666" size={25} />
                     </View>
                     
-                    <TextInput placeholder= 'Digite um texto curto sobre você! ' textAlign= {"center"} placeholderTextColor='#666' 
-                style={styles.textArea} numberOfLines={10} multiline ={true}/>
+                    <TextInput placeholder= 'Digite um texto curto sobre você! ' 
+                    textAlign= {"center"}
+                    placeholderTextColor='#666' 
+                    onChangeText={( text) => this.setState({ description: text})}
+                    style={styles.textArea} 
+                    numberOfLines={10} multiline ={true}/>
                     
                 </View>
 
                 <View><Text style={styles.textContato}> Contato</Text></View>
 
                 <View> 
-                <Icon name="phone" color="#666" style={styles.iconPhone} />
-                    <TextInput placeholder= '(**) *****-****' />
+                <Icon name="phone" 
+                    color="#666" 
+                    style={styles.iconPhone} />
+                    <TextInput placeholder= '(**) *****-****' 
+                   onChangeText={(text) => this.setState ({ telephone: text})}  />
+                    
                 </View>
 
                 <View>
-            <TouchableOpacity style={styles.buttonRegister}>   
+            <TouchableOpacity style={styles.buttonRegister} onPress={() => this.handleSubimt()}>   
                 <Text style= {{color: '#fff'}}> Confirm </Text>
             </TouchableOpacity>
                 </View>

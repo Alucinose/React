@@ -45,7 +45,7 @@ class Login extends React.Component{
     //Armazenar dados do nosso usuário no local storage
     setStorage = async ( data ) => {
         //Armazena nossos dados dentro da key @user
-       await AsyncStorage.setItem('@user', data)
+       await AsyncStorage.setItem('@user', JSON.stringify(data))
       
     }
 
@@ -69,7 +69,10 @@ class Login extends React.Component{
                 <View style = {styles.viewLogin}>
                     <View style={styles.sectionStyle}>
                         <Icon name="email" color="#fff" style={styles.iconStyle} />
-                        <TextInput placeholder='Digite seu e-mail' placeholderTextColor='#fff' style={styles.input} onChangeText= {( text) => this.setState({ email: text })} />
+                        <TextInput placeholder='Digite seu e-mail' 
+                        placeholderTextColor='#fff' 
+                        style={styles.input}
+                        onChangeText= {( text) => this.setState({ email: text })} />
                     </View>
                     <View style={styles.viewPassword}>
                         <Icon name="lock" color="#fff" style={styles.iconStyle} />
