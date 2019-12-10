@@ -4,8 +4,9 @@ import background from '../../assets/bg.jpg' //Imagem fundo
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import perfil from '../../assets/perfil.png'
 import ImagePicker from 'react-native-image-picker'
-import axios from 'axios'
+import Axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
+
 
 
 class Perfil extends React.Component {
@@ -15,13 +16,25 @@ class Perfil extends React.Component {
         //photo: ele irá armazenar o caminho do nosso avatar no smartphone
         photo: '',
         description: '',
-        telephone: ''
+        telephone: '',
+        id: '',
+        token: '',
     }
 
     //Nosso component DidMount
-    componentDidMount() {
-        const user = AsyncStorage.getItem('user')
+    async componentDidMount() {
+        const user = await AsyncStorage.getItem('@user')
 
+        
+
+        //Transformando nossa string em objeto
+        const { userExists, token } = JSON.parse(user)
+
+        //Setando o id do nosso usuário no estado
+        this.setState({ id: userExists.id, token: token })
+
+      
+        
     }
 
     //Alterando imagem do perfil
@@ -36,7 +49,7 @@ class Perfil extends React.Component {
             } else if (response.customButton) {
               console.log('User tapped custom button: ', response.customButton);
             } else {
-              const source = { uri: response.uri };
+              const source = response.uri ;
           
               this.setState({
                 photo: source
@@ -45,9 +58,18 @@ class Perfil extends React.Component {
           });
     }
     //Envia os dados do usuário
-    handleSubimt() {
-        axios.put(`http://10.51.47.64:3000/users/${idUsuario}`, this.state)
+    async handleSubimt() {
+        //Pegando o id e token do usuário dentro do state
+   
+        console.log(this.state)
+      
+      
 
+        //Enviando nossas propriedades do state para nossa rota de update
+        const {data} = await Axios.put(`http://10.51.47.64:3000/users/${this.state.id}`, this.state, {
+        headers: {Authorization: "Bearer " + this.state.token }
+    })
+        
     }
    
     render (){
